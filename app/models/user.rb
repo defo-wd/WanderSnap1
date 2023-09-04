@@ -1,0 +1,36 @@
+class User < ApplicationRecord
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :validatable
+
+  # レベル、エリア、ポイントのカスタム属性
+  attr_accessor :level, :area
+
+  # バリデーションを追加
+  validates :level, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+  validates :area, presence: true
+  validates :points, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+
+  def increase_points(amount)
+    update(points: points + amount)
+  end
+
+  def decrease_points(amount)
+    update(points: points - amount)
+  end
+
+  # カスタム属性へのアクセス方法を定義
+  def level
+    self[:level] || 0 # レベルが nil の場合はデフォルト値 0 を返す
+  end
+
+  def area
+    self[:area] || "" # エリアが nil の場合は空文字列を返す
+  end
+
+  # ユーザーのレベル、エリア、ポイントを設定
+  def set_user_attributes(level, area, points)
+    update(level: level, area: area, points: points)
+  end
+end
