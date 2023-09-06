@@ -10,7 +10,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_09_04_155848) do
+ActiveRecord::Schema.define(version: 2023_09_06_023735) do
+
+  create_table "comments", force: :cascade do |t|
+    t.text "body"
+    t.integer "user_id"
+    t.integer "post_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "follows", force: :cascade do |t|
+    t.integer "follower_id"
+    t.integer "followee_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "likes", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "post_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "maps", force: :cascade do |t|
     t.float "latitude", limit: 53
@@ -18,6 +40,9 @@ ActiveRecord::Schema.define(version: 2023_09_04_155848) do
     t.integer "post_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "spot_name"
+    t.text "description"
+    t.string "photo_url"
     t.index ["post_id"], name: "index_maps_on_post_id"
   end
 
@@ -36,6 +61,8 @@ ActiveRecord::Schema.define(version: 2023_09_04_155848) do
     t.string "snap"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "map_id"
+    t.index ["map_id"], name: "index_posts_on_map_id"
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
@@ -57,5 +84,6 @@ ActiveRecord::Schema.define(version: 2023_09_04_155848) do
   add_foreign_key "maps", "posts"
   add_foreign_key "post_maps", "maps"
   add_foreign_key "post_maps", "posts"
+  add_foreign_key "posts", "maps"
   add_foreign_key "posts", "users"
 end
