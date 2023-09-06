@@ -3,6 +3,10 @@ class User < ApplicationRecord
 
   # アソシエーションもろもろ
   has_many :posts
+  has_many :likes
+  has_many :comments
+  has_many :follows, foreign_key: :follower_id, class_name: "Follow"
+  has_many :followings, through: :follows, source: :followee
 
 
   devise :database_authenticatable, :registerable,

@@ -84,3 +84,9 @@ gem 'exiftool_vendored'
 
 # ページネーション
 gem 'kaminari'
+
+# Google Maps API用
+gem 'geocoder'
+
+# 認証トークンの生成
+gem 'jwt'
