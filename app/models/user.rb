@@ -1,6 +1,10 @@
 class User < ApplicationRecord
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+
+
+  # アソシエーションもろもろ
+  has_many :posts
+
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
@@ -9,7 +13,7 @@ class User < ApplicationRecord
 
   # バリデーションを追加
   validates :level, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
-  validates :area, presence: true
+  validates :area, presence: false
   validates :points, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
 
   def increase_points(amount)
@@ -33,4 +37,5 @@ class User < ApplicationRecord
   def set_user_attributes(level, area, points)
     update(level: level, area: area, points: points)
   end
+
 end
