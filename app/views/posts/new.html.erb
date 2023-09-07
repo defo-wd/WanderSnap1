@@ -1,6 +1,6 @@
-<h2>New Post</h2>
+<h2>新規投稿</h2>
 
-<%= form_for(@post, url: posts_path) do |f| %>
+<%= form_with(model: @post, local: true) do |form| %>
   <% if @post.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@post.errors.count, "error") %> prohibited this post from being saved:</h2>
@@ -14,18 +14,43 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :body %><br>
-    <%= f.text_area :body %>
+    <%= form.label :body %>
+    <%= form.text_area :body %>
   </div>
 
   <div class="field">
-    <%= f.label :snap %><br>
-    <%= f.file_field :snap %>
+    <%= form.label :snap %>
+    <%= form.file_field :snap %>
   </div>
+
+  <%= form.fields_for :maps do |map_fields| %>
+    <div class="field">
+      <%= map_fields.label :latitude %>
+      <%= map_fields.text_field :latitude %>
+    </div>
+
+    <div class="field">
+      <%= map_fields.label :longitude %>
+      <%= map_fields.text_field :longitude %>
+    </div>
+
+    <div class="field">
+      <%= map_fields.label :spot_name %>
+      <%= map_fields.text_field :spot_name %>
+    </div>
+
+    <div class="field">
+      <%= map_fields.label :description %>
+      <%= map_fields.text_area :description %>
+    </div>
+
+    <div class="field">
+      <%= map_fields.label :photo_url %>
+      <%= map_fields.text_field :photo_url %>
+    </div>
+  <% end %>
 
   <div class="actions">
-    <%= f.submit %>
+    <%= form.submit %>
   </div>
 <% end %>
-
-<%= link_to 'Back', root_path %>

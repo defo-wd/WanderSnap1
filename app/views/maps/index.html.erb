@@ -1,0 +1,9 @@
+<div id="mapid" style="height: 600px;"></div>
+
+<%= javascript_tag do %>
+  window.mapsData = <%= @maps.to_json(include: :post) %>;
+<% end %>
+
+<div class="sidebar">
+  <%= render 'posts/form', post: @post %>
+</div>

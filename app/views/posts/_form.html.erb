@@ -1,0 +1,67 @@
+<%= form_with(model: post, local: true) do |form| %>
+  <% if post.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(post.errors.count, "error") %> prohibited this post from being saved:</h2>
+
+      <ul>
+        <% post.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :body %>
+    <%= form.text_area :body, required: true %>
+  </div>
+
+  <div class="field">
+    <%= form.label :snap %>
+    <%= form.file_field :snap%>
+  </div>
+
+  <%= form.fields_for :maps do |map_fields| %>
+    <div class="field">
+      <%= map_fields.label :latitude %>
+      <%= map_fields.text_field :latitude, id: 'latitude_field' %>
+    </div>
+
+    <div class="field">
+      <%= map_fields.label :longitude %>
+      <%= map_fields.text_field :longitude, id: 'longitude_field' %>
+    </div>
+
+    <div class="field">
+      <%= map_fields.label :spot_name %>
+      <%= map_fields.text_field :spot_name %>
+    </div>
+
+    <div class="field">
+      <%= map_fields.label :description %>
+      <%= map_fields.text_area :description %>
+    </div>
+
+    <div class="field">
+      <%= map_fields.label :photo %>
+      <%= map_fields.file_field :photo, accept: 'image/png,image/gif,image/jpeg' %>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        document.getElementById('latitude_field').value = position.coords.latitude;
+        document.getElementById('longitude_field').value = position.coords.longitude;
+      });
+    } else {
+      alert("Geolocation not available");
+    }
+  });
+</script>
