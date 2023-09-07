@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
-
+    <%= javascript_pack_tag 'maps' %>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDUFgWwu57R50ATnJ6zmPeO3Xuphjn620w&callback=initMap"></script>
     <script src="https://kit.fontawesome.com/079d0f24e7.js" crossorigin="anonymous"></script>
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>

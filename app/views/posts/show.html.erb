@@ -1,0 +1,10 @@
+<% if @post.snap.present? %>
+  <%= image_tag @post.snap.url %>
+<% else %>
+  <h1>No Image Available</h1>
+<% end %>
+
+<p><%= @post.body %></p>
+
+<%= link_to 'Edit', edit_post_path(@post) %> |
+<%= link_to 'Back', maps_path %>

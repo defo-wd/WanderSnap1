@@ -11,16 +11,19 @@ class PostsController < ApplicationController
 
   def new
     @post = Post.new
+    @post.maps.build
   end
 
   def create
     @post = current_user.posts.new(post_params)
-    @post.map = Map.find(params[:map_id]) if params[:map_id]
-    if @post.save
-      redirect_to @post, notice: 'Post was successfully created.'
-    else
-      render :new
-    end
+        # MapのIDがparamsに存在する場合は、そのMapオブジェクトを@postのmapに設定
+      if @post.save
+        # 緯度と経度を関連するMapオブジェクトにも保存する(仮定)
+        @post.maps.create(latitude: params[:post][:latitude], longitude: params[:post][:longitude])
+        redirect_to @post, notice: 'Post was successfully created.'
+      else
+        render :new
+      end
   end
 
   def edit
@@ -45,6 +48,7 @@ class PostsController < ApplicationController
   private
 
   def post_params
-    params.require(:post).permit(:body, :snap, :map_id)
+    params.require(:post).permit(:body, :snap, maps_attributes: [:id, :latitude, :longitude, :spot_name, :description, :photo_url, :_destroy])
   end
+
 end

@@ -8,6 +8,7 @@
     "@rails/webpacker": "5.4.4",
     "bootstrap": "4.6.2",
     "jquery": "^3.7.1",
+    "leaflet": "^1.9.4",
     "popper.js": "^1.16.1",
     "rails_admin": "3.1.2",
     "turbolinks": "^5.2.0",
