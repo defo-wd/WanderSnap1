@@ -32,7 +32,7 @@ function addMarkerToMap(map, latitude, longitude, popupText = '') {
 document.addEventListener("DOMContentLoaded", () => {
   const map = initializeMap('mapid');
 
-  // すべての地図データを読み込んでマーカーを追加する
+  // すべてのデータを読み込んでマーカーを追加する
 if (window.mapsData) {
   window.mapsData.forEach((mapData) => {
     addMarkerToMap(map, mapData.latitude, mapData.longitude, `

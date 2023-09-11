@@ -20,6 +20,13 @@ class User < ApplicationRecord
   validates :area, presence: false
   validates :points, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
 
+  #ゲストユーザー
+  def self.guest
+    find_or_create_by!(email: 'guest@example.com') do |user|
+      user.password = SecureRandom.urlsafe_base64
+    end
+  end 
+  
   def increase_points(amount)
     update(points: points + amount)
   end
