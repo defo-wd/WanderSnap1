@@ -149,8 +149,6 @@ GEM
       activerecord
       kaminari-core (= 1.2.2)
     kaminari-core (1.2.2)
-    leaflet-rails (1.9.3)
-      rails (>= 4.2.0)
     listen (3.8.0)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
@@ -326,7 +324,6 @@ DEPENDENCIES
   jbuilder (~> 2.7)
   jwt
   kaminari
-  leaflet-rails
   listen (~> 3.3)
   puma (~> 5.0)
   rack-mini-profiler (~> 2.0)

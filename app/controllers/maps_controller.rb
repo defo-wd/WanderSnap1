@@ -27,9 +27,7 @@ class MapsController < ApplicationController
   end
 
   def index
-    @maps = Map.all.map do |map|
-    map.attributes.merge(snap: Rails.application.routes.url_helpers.rails_blob_path(map.snap, only_path: true))
-  end
+    @maps = Map.all
     @post = Post.new
     @posts = Post.all
   end

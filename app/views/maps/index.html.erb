@@ -1,9 +1,37 @@
-<div id="mapid" style="height: 600px;"></div>
 
-<%= javascript_tag do %>
-  window.mapsData = <%= @maps.to_json(include: :post) %>;
-<% end %>
+
+<div id='map' style="width:300px; height:300px;"></div>
 
 <div class="sidebar">
   <%= render 'posts/form', post: @post %>
 </div>
+
+<script>
+  let map
+
+    function initMap(){
+      geocoder = new google.maps.Geocoder()
+
+      map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: 35.68123620000001, lng:139.7671248},
+          zoom: 12,
+      });
+
+
+      <% @maps.each do |m| %>
+          (function(){
+          var contentString = "住所：<%= m.spot_name %>";
+
+          var marker = new google.maps.Marker({
+              position:{lat: <%= m.latitude %>, lng: <%= m.longitude %>},
+              map: map,
+              title: contentString
+          });
+
+          })();
+      <% end %>
+      }
+      const msg = 'Hello';
+     console.log(msg);
+</script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['AIzaSyDUFgWwu57R50ATnJ6zmPeO3Xuphjn620w'] %>&callback=initMap" async defer></script
