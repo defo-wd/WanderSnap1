@@ -90,8 +90,3 @@ gem 'geocoder'
 
 # 認証トークンの生成
 gem 'jwt'
-
-
-gem 'leaflet-rails'
-
-gem 'leaflet-markercluster-rails'
