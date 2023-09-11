@@ -7,3 +7,14 @@
 <div class="sidebar">
   <%= render 'posts/form', post: @post %>
 </div>
+<script>
+  // rubyから渡された住所配列をjsの変数に格納
+  var maps = <%= @maps.to_json.html_safe %>;
+
+  for(var hash_count = 0; hash_count < maps.length; hash_count++){
+    // 緯度経度とコメントを取り出しマーカー化
+    L.marker(maps[hash_count].lonlat.split(','), {icon: L.icon({iconUrl: "/marker.png"})},)
+      .bindPopup(maps[hash_count].comment)
+      .addTo(map);
+  }
+</script>

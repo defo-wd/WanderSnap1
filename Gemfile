@@ -93,3 +93,5 @@ gem 'jwt'
 
 
 gem 'leaflet-rails'
+
+gem 'leaflet-markercluster-rails'

@@ -1,6 +1,8 @@
+
 import 'leaflet/dist/leaflet.css';
 import { icon } from 'leaflet';
 import L from 'leaflet';
+import 'leaflet.markercluster'
 
 // Webpackerを使用している場合に発生するアイコンの問題を解消
 delete L.Icon.Default.prototype._getIconUrl;
@@ -62,6 +64,19 @@ if (window.mapsData) {
     });
   }
 });
+
+if (navigator.geolocation) {
+  navigator.geolocation.getCurrentPosition(
+    (position) => {
+      // 成功時の処理
+    },
+    (error) => {
+      // エラーハンドリング
+      console.error('Location error:', error);
+      // エラーメッセージを表示するなどの処理を追加
+    }
+  );
+}
 
 // initializeMapとaddMarkerToMap関数をエクスポート（他のファイルから利用可能にする）
 export { initializeMap, addMarkerToMap };
