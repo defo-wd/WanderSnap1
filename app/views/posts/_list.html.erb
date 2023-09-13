@@ -1,0 +1,11 @@
+<ul class="list-group">
+  <% @posts.each do |post| %>
+    <li class="list-group-item">
+      <img src="<%= post.snap.url %>" alt="<%= post.body %>" style="width: 50px; height: 50px;">
+      <div>
+        <strong><%= post.body %></strong>
+        <p>Likes: 10 | Comments: 5</p> <!-- ここはダミーデータなので後で修正が必要です -->
+      </div>
+    </li>
+  <% end %>
+</ul>
