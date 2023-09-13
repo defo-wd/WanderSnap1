@@ -23,6 +23,8 @@ class PostsController < ApplicationController
          @map.save!
          @post_map = PostMap.new(post_id:@post.id,map_id:@map.id)
          @post_map.save!
+         latitude = params[:map][:latitude]
+         longitude = params[:map][:longitude]
         # 緯度と経度を関連するMapオブジェクトにも保存する(仮定)
         #@post.maps.create(latitude: params[:post][:latitude], longitude: params[:post][:longitude])
         redirect_to @post, notice: 'Post was successfully created.'
@@ -58,5 +60,5 @@ class PostsController < ApplicationController
 
    def map_params
     params.require(:map).permit(:latitude, :longitude, :spot_name, :description, :photo_url)
-  end
+   end
 end

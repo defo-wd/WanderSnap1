@@ -1,1 +1,115 @@
-<h2>TopPage</h2>
+<div class="container-fluid">
+  <div class="row">
+    <!-- Sidebar -->
+    <div class="col-md-4 bg-light sidebar order-1">
+      <div class="row">
+        <!-- サイドバーのボタン部分 -->
+        <div class="col-md-6">
+          <%= render 'layouts/sidebar' %>
+        </div>
+        <!-- サイドバーのコンテンツ部分 -->
+        <div class="col-md-6">
+          <div class="content-area">
+            <%= render 'layouts/spot_section' %>
+            <%= render 'layouts/post_section' %>
+            <%= render 'layouts/likes_section' %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Google Map -->
+    <div class="col-md-8 order-2">
+      <div id="map" style="height: 500px;"></div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  let map;
+
+  function initMap(){
+    geocoder = new google.maps.Geocoder()
+
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        const pos = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        };
+
+        // Google Mapの初期化
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: pos,
+          zoom: 12,
+        });
+
+        // 現在の位置にマーカーを設定
+        new google.maps.Marker({
+          position: pos,
+          map: map,
+          title: "現在位置",
+        });
+
+        // MapとPostデータから各ポストの情報と位置を取得してマーカーを設定
+        <% @maps.each do |m| %>
+          <% m.post_maps.each do |post_map| %>
+            <% post = post_map.post %>
+            (function(){
+              // ポストの詳細を表示するためのHTMLコンテンツを作成
+              var contentString = `
+                <ul class="list-group">
+                  <li class="list-group-item">
+                    <img src="<%= post.snap.url %>" alt="<%= post.body %>" style="width: 50px; height: 50px;">
+                    <div>
+                      <strong><%= post.body %></strong>
+                      <p>Likes: 10 | Comments: 5</p> <!-- ここはダミーデータなので後で修正が必要です -->
+                    </div>
+                  </li>
+                </ul>
+              `;
+
+              // インフォウィンドウの作成
+              var infowindow = new google.maps.InfoWindow({
+                content: contentString,
+              });
+
+              // マーカーの作成と地図への追加
+              var marker = new google.maps.Marker({
+                position:{lat: <%= m.latitude %>, lng: <%= m.longitude %>},
+                map: map,
+                title: "<%= m.spot_name %>",
+              });
+
+              // マーカークリック時のイベントハンドラを設定（インフォウィンドウを開く）
+              marker.addListener('click', function() {
+                infowindow.open(map, marker);
+              });
+            })();
+          <% end %>
+        <% end %>
+      });
+    } else {
+      // Geolocationがサポートされていない場合、デフォルトの位置に地図を表示
+      map = new google.maps.Map(document.getElementById('map'), {
+        center: {lat: 35.68123620000001, lng: 139.7671248},
+        zoom: 12,
+      });
+    }
+  }
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['AIzaSyDUFgWwu57R50ATnJ6zmPeO3Xuphjn620w'] %>&callback=initMap" async defer></script>
+
+<script>
+  document.querySelectorAll('.nav-link').forEach((link) => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      document.querySelectorAll('.content-section').forEach((section) => {
+        section.classList.add('d-none');
+      });
+      document.querySelector(`#${e.target.getAttribute('data-content')}`).classList.remove('d-none');
+    });
+  });
+</script>

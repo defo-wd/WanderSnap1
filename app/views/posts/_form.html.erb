@@ -1,8 +1,7 @@
 <%= form_with(model: post, local: true) do |form| %>
   <% if post.errors.any? %>
-    <div id="error_explanation">
+    <div id="error_explanation" class="alert alert-danger">
       <h2><%= pluralize(post.errors.count, "error") %> prohibited this post from being saved:</h2>
-
       <ul>
         <% post.errors.full_messages.each do |message| %>
           <li><%= message %></li>
@@ -11,23 +10,46 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :body %>
-    <%= form.text_area :body, required: true %>
+  <div class="form-group">
+    <%= form.label :spot_name, class: 'form-label' %>
+    <%= text_field_tag 'map[spot_name]', nil, class: 'form-control' %>
   </div>
 
-  <div class="field">
-    <%= form.label :spot_name %>
-    <%= text_field_tag 'map[spot_name]' %>
+  <div class="form-group">
+    <button type="button" class="btn btn-primary" onclick="getCurrentLocation()">現在位置を使用する</button>
   </div>
 
-  <div class="field">
-    <%= form.label :snap %>
-    <%= form.file_field :snap%>
+  <!-- 現在座標を保存するための隠しフィールド -->
+  <input type="hidden" name="map[latitude]" id="latitude">
+  <input type="hidden" name="map[longitude]" id="longitude">
+
+  <div class="form-group">
+    <%= form.label :body, class: 'form-label' %>
+    <%= form.text_area :body, class: 'form-control', required: true %>
   </div>
 
+  <div class="form-group">
+    <%= form.label :snap, class: 'form-label' %>
+    <%= form.file_field :snap, class: 'form-control' %>
+  </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit 'Submit', class: 'btn btn-success' %>
   </div>
 <% end %>
+
+<script>
+function getCurrentLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition((position) => {
+      document.getElementById('latitude').value = position.coords.latitude;
+      document.getElementById('longitude').value = position.coords.longitude;
+      alert('現在位置を取得しました');
+    }, () => {
+      alert('位置情報の取得に失敗しました');
+    });
+  } else {
+    alert('このブラウザは位置情報の取得をサポートしていません');
+  }
+}
+</script>
