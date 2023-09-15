@@ -1,0 +1,29 @@
+<% if user.nil? %>
+  <p>User is not defined</p>
+  <% return %>
+<% end %>
+
+
+<div class="profile">
+  <% if user.profile_image.present? %>
+    <%= image_tag user.profile_image %>
+  <% else %>
+    <%= image_tag 'defaultuser.png' %>
+  <% end %>
+  <h2><%= user.name %></h2>
+
+  <% unless current_user == user %>
+  <div id="follow_form">
+  <% if current_user.following?(user) %>
+    <%= render 'unfollow' %>
+  <% else %>
+    <%= render 'follow' %>
+  <% end %>
+  </div>
+<% end %>
+
+  <% if current_user == user %>
+  <%= link_to 'Edit Profile', edit_user_registration_path %>
+  <% end %>
+
+</div>

@@ -4,7 +4,8 @@ class ApplicationController < ActionController::Base
   protected
 
   def configure_permitted_parameters
-    # ユーザー登録時に必要な情報を許可する
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:email, :password])
+  devise_parameter_sanitizer.permit(:sign_in, keys: [:name])
+  devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :email, :profile_image])
+  devise_parameter_sanitizer.permit(:account_update, keys: [:name, :email, :profile_image])
   end
 end

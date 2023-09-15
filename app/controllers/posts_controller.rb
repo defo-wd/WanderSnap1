@@ -1,12 +1,14 @@
 class PostsController < ApplicationController
-  before_action :authenticate_user!, only: [:create, :update, :destroy]
-
+ before_action :authenticate_user!, only: [:edit, :update, :destroy]
+ before_action :correct_user, only: [:edit, :update, :destroy]
   def index
     @posts = Post.all
   end
 
   def show
     @post = Post.find(params[:id])
+    @comments = @post.comments.where(parent_id: nil).includes(:replies) # 主コメントとそのリプライを取得
+    @comment = @post.comments.new
   end
 
   def new
@@ -53,6 +55,12 @@ class PostsController < ApplicationController
   end
 
   private
+   def correct_user
+       @post = Post.find(params[:id])
+    unless current_user == @post.user
+        redirect_to root_path, alert: "Not authorized"
+    end
+   end
 
    def post_params
      params.require(:post).permit(:body, :snap, maps_attributes: [:id, :latitude, :longitude, :spot_name, :description, :photo_url, :_destroy])
