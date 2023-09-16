@@ -14,4 +14,9 @@ class Post < ApplicationRecord
   def liked_by?(user)
   likes.where(user_id: user.id).exists?
   end
+  
+  def self.ransackable_attributes(auth_object = nil)
+    %w(body) + _ransackers.keys
+  end
+  
 end

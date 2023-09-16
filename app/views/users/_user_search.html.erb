@@ -1,0 +1,10 @@
+<% if @results_user.present? %>
+  <h3>User Search Results</h3>
+  <ul>
+    <% @results_user.each do |user| %>
+      <li><%= link_to user.user_name, user_path(user) %></li>
+    <% end %>
+  </ul>
+<% else %>
+  <h3>No user found</h3>
+<% end %>

@@ -1,0 +1,20 @@
+<h2>User Results</h2>
+<ul>
+  <% @results_user.each do |user| %>
+    <li><%= link_to user.name, user_path(user) %></li>
+  <% end %>
+</ul>
+
+<h2>Post Results</h2>
+<ul>
+  <% @results_post.each do |post| %>
+    <li><%= link_to post.body, post_path(post) %></li>
+  <% end %>
+</ul>
+
+<h2>Map Results</h2>
+<ul>
+  <% @results_map.each do |map| %>
+    <li><%= link_to map.spot_name, map_path(map) %></li>
+  <% end %>
+</ul>

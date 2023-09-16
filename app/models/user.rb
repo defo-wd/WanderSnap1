@@ -1,4 +1,7 @@
 class User < ApplicationRecord
+  def self.ransackable_attributes(auth_object = nil)
+  %w[name]
+  end
 
 
   # アソシエーションもろもろ
@@ -76,5 +79,7 @@ class User < ApplicationRecord
   def following?(other_user)
     following.include?(other_user)
   end
+
+
 
 end

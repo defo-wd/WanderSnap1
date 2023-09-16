@@ -32,6 +32,12 @@ class MapsController < ApplicationController
     @posts = Post.all
   end
 
+def search
+  @q = Map.ransack(params[:q])
+  @maps = @q.result(distinct: true)
+end
+
+
 
   private
 

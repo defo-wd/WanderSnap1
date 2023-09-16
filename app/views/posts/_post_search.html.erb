@@ -1,0 +1,10 @@
+<% if @results_post.present? %>
+  <h3>Post Search Results</h3>
+  <ul>
+    <% @results_post.each do |post| %>
+      <li><%= link_to truncate(post.body, length: 30), post_path(post) %></li>
+    <% end %>
+  </ul>
+<% else %>
+  <h3>No post found</h3>
+<% end %>

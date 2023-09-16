@@ -6,4 +6,10 @@ class Map < ApplicationRecord
    # after_validation :geocode
   #validates :latitude, :longitude, presence: true
   validates :spot_name,  presence: true
+
+  def self.ransackable_attributes(auth_object = nil)
+    %w(spot_name) + _ransackers.keys
+  end
+
+
 end
