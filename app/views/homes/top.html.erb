@@ -1,27 +1,40 @@
+<style>
+  body {
+    font-family: 'Brush Script MT', cursive;
+  }
+  .container-fluid, .row {
+    margin: 0;
+    padding: 0;
+  }
+</style>
+
 <div class="container-fluid">
   <div class="row">
-    <!-- Sidebar -->
-    <div class="col-md-4 bg-light sidebar order-1">
+    <!-- Left side: Sidebar and Content (taking up 1/2 of the screen) -->
+    <div class="col-md-6 bg-light">
+      <!-- Sidebar -->
       <div class="row">
-        <!-- サイドバーのボタン部分 -->
-        <div class="col-md-6">
+        <div class="col-md-12">
           <%= render 'layouts/sidebar' %>
         </div>
-        <!-- サイドバーのコンテンツ部分 -->
-        <div class="col-md-6">
+      </div>
+      <!-- Content -->
+      <div class="row">
+        <div class="col-md-12">
           <div class="content-area">
             <%= render 'layouts/profile_section' %>
             <%= render 'layouts/spot_section' %>
             <%= render 'layouts/post_section' %>
             <%= render 'layouts/likes_section' %>
+            <%= render 'layouts/follow_section' %>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Google Map -->
-    <div class="col-md-8 order-2">
-      <div id="map" style="height: 500px;"></div>
+    <!-- Right side: Google Map (taking up 1/2 of the screen) -->
+    <div class="col-md-6 p-0">
+      <div id="map" style="height: 100vh; width: 100%;"></div>
     </div>
   </div>
 </div>
@@ -130,6 +143,8 @@
 
 
 <script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['AIzaSyDUFgWwu57R50ATnJ6zmPeO3Xuphjn620w'] %>&callback=initMap" async defer></script>
+
+<!--sサイドバー-->
 
 <script>
   document.querySelectorAll('.nav-link').forEach((link) => {

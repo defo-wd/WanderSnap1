@@ -1,0 +1,19 @@
+<div class="content-section d-none" id="follow">
+  <h2>Following Users</h2>
+  <% if user_signed_in? %>
+    <ul class="list-group">
+      <% if current_user.following.any? %>
+        <% current_user.following.each do |user| %>
+           <li class="list-group-item">
+            <%= image_tag user.profile_image.url, size: "50x50", class: "rounded-circle me-3" if user.profile_image.present? %>
+            <%= link_to user.name, user_path(user), class: "font-weight-bold text-decoration-none text-dark" %>
+          </li>
+        <% end %>
+      <% else %>
+        <p>フォローしているユーザーはいません</p>
+      <% end %>
+    </ul>
+  <% else %>
+    <p>You need to sign in to see the people you are following.</p>
+  <% end %>
+</div>

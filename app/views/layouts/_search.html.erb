@@ -1,7 +1,26 @@
-<%= form_with url: search_path, method: :get, local: true do |f| %>
-  <div class="form-group">
-    <%= f.label :q, "Search" %>
-    <%= f.text_field :q, class: "form-control" %>
+<div class="container">
+  <br/>
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-10 col-lg-8">
+      <%= form_with url: search_path, method: :get, local: true do |f| %>
+        <div class="form-group row no-gutters align-items-center">
+          <div class="col-auto">
+          </div>
+          <!-- end of col -->
+          <div class="col">
+            <%= f.text_field :q, class: "form-control form-control-lg form-control-borderless text-gray", placeholder: "Search..." %>
+          </div>
+          <!-- end of col -->
+          <div class="col-auto">
+            <%= f.button type: "submit", class: "btn btn-lg btn-gray" do %>
+              <!-- フォントアイコンをボタンに追加 -->
+              <i class="fas fa-search"></i>
+            <% end %>
+          </div>
+          <!-- end of col -->
+        </div>
+      <% end %>
+    </div>
+    <!-- end of col -->
   </div>
-  <%= f.submit "Search", class: "btn btn-primary" %>
-<% end %>
+</div>
