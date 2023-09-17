@@ -26,9 +26,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   # 通報機能
-  has_many :reports, class_name: "Report", foreign_key: "reporter_id", dependent: :destroy
-  has_many :reverse_of_reports, class_name: "Report", foreign_key: "reported_id", dependent: :destroy
-
+  has_many :reports, class_name: 'Report', foreign_key: 'reported_post_id'
   # レベル、エリア、ポイントのカスタム属性
   attr_accessor :level, :area
 

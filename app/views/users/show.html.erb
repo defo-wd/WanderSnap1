@@ -1,1 +1,4 @@
 <%= render 'users/profile', user: @user %>
+
+<%= link_to '通報する', new_report_path(reporter_id: current_user.id, reported_id: @user.id) %>
+
