@@ -6,31 +6,29 @@ class CommentsController < ApplicationController
     @comments = Comment.all
   end
 
-  def show
-    @comment = Comment.find(params[:id])
-  end
-
-  def new
-    @comment = Comment.new
-  end
-
-  def create
-    @comment = @post.comments.new(comment_params.merge(user_id: current_user.id))
-    if @comment.save
-      redirect_to @post, notice: 'Comment was successfully created.'
-    else
-      render :new
+ def create
+  @comment = @post.comments.new(comment_params.merge(user_id: current_user.id))
+  if @comment.save
+    respond_to do |format|
+      format.html { redirect_to @post, notice: 'Comment was successfully created.' }
+      format.js
     end
+  else
+    redirect_to @post
   end
+ end
 
-  def destroy
-    @comment = @post.comments.find_by(id: params[:id], user_id: current_user.id)
-    if @comment&.destroy
-      redirect_to @post, notice: 'Comment was successfully destroyed.'
-    else
-      redirect_to @post, alert: 'Failed to destroy the comment.'
+def destroy
+  @comment = @post.comments.find_by(id: params[:id], user_id: current_user.id)
+  if @comment&.destroy
+    respond_to do |format|
+      format.html { redirect_to @post, notice: 'Comment was successfully destroyed.' }
+      format.js
     end
+  else
+    redirect_to @post, alert: 'Failed to destroy the comment.'
   end
+end
 
   private
 
@@ -39,6 +37,8 @@ class CommentsController < ApplicationController
   end
 
   def comment_params
-    params.require(:comment).permit(:content)
+    params.require(:comment).permit(:body, :parent_id)
   end
 end
+
+

@@ -1,0 +1,10 @@
+<% if @results_map.present? %>
+  <h3>Map Search Results</h3>
+  <ul>
+    <% @results_map.each do |map| %>
+      <li><%= link_to map.spot_name, map_path(map) %></li>
+    <% end %>
+  </ul>
+<% else %>
+  <h3>No Spot found</h3>
+<% end %>

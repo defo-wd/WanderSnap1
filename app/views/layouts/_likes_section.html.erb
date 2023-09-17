@@ -1,3 +1,15 @@
-<div id="likes" class="content-section d-none">
-  <!-- ここで 'likes' をレンダリングするか、他のコンテンツを追加します -->
+<div class="content-section d-none" id="likes">
+  <h2>Your Likes</h2>
+  <% if user_signed_in? %>
+    <ul class="list-group">
+      <% current_user.liked_posts.each do |post| %>
+        <li class="list-group-item">
+          <%= link_to post.body, post_path(post) %>
+          <p><%= post.body.truncate(100) %></p>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p>You need to sign in to see your liked posts.</p>
+  <% end %>
 </div>

@@ -1,0 +1,11 @@
+<%= form_with(model: @report, local: true) do |form| %>
+  <%= form.label :reason, "通報理由" %>
+  <%= form.text_area :reason %>
+
+  <%= form.hidden_field :reporter_id, value: current_user.id %>
+<%= form.hidden_field :reported_id, value: @user.id %>
+<%= form.hidden_field :reported_post_id, value: @post.id %>
+
+
+  <%= form.submit "通報する" %>
+<% end %>

@@ -1,18 +1,45 @@
 Rails.application.routes.draw do
+  mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   root to: "homes#top"
-  devise_for :users, controllers: {
-    sessions: 'users/sessions'
-  }
+
+
+  # 一般的な検索用のルート
+  get "search" => "searches#search"
+
+  # ユーザー関連のルート
+  devise_for :users, controllers: { sessions: 'users/sessions' }
 
   devise_scope :user do
     post 'users/guest_sign_in', to: 'users/sessions#new_guest'
   end
 
-  resources :posts do
-    resources :comments
-    resources :maps # Postに関連するMapエンドポイントをネスト
+  resources :users do
+    collection do
+      get 'search', as: :search
+    end
   end
 
-  resources :maps, only: [:index, :show] # 全てのマップを閲覧、個別のマップの詳細の表示
+  # ポスト関連のルート
+  resources :posts do
+    resource :likes, only: [:create, :destroy]
+    resources :comments # コメントリソースをpostsリソース内にネスト
+    resources :maps # Postに関連するMapエンドポイントをネスト
 
+    collection do
+      get 'search', as: :search
+    end
+  end
+
+  # マップ関連のルート
+  resources :maps, only: [:index, :show] do
+    collection do
+      get 'search', as: :search
+    end
+  end
+
+  resources :follows, only: [:create, :destroy]
+
+  resources :search_results, only: [:index]
+
+  resources :reports, only: [:new, :create]
 end

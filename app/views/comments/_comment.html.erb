@@ -1,0 +1,12 @@
+<div class="comment" style="margin-left: <%= 20 * comment.depth %>px;">
+  <p><strong><%= comment.user.name %>:</strong> <%= comment.body %></p>
+
+  <div>
+    <%= link_to 'Reply', '#', data: { toggle: 'collapse', target: "#reply_form_#{comment.id}" } %>
+    <div class="reply-form collapse" id="reply_form_<%= comment.id %>">
+      <%= render partial: 'comments/reply_form', locals: { post: @post, parent_comment: comment } %>
+    </div>
+  </div>
+
+  <%= render partial: 'comments/comment', collection: comment.replies, as: :comment %>
+</div>

@@ -1,0 +1,8 @@
+<div class="row mt-4">
+  <div class="col-md-12">
+    <%= form_with model: [ local_assigns[:post], local_assigns[:post].comments.build ], remote: true do |f| %>
+      <%= f.text_area :body, placeholder: "Write a comment...", class: "form-control" %>
+      <%= f.submit "Comment", class: "btn btn-primary mt-2" %>
+    <% end %>
+  </div>
+</div>

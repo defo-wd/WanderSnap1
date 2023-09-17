@@ -1,0 +1,3 @@
+<%= form_with(url: follow_path(current_user.active_follows.find_by(followee_id: @user.id)), method: :delete, remote: true) do |f| %>
+  <%= f.submit "Unfollow", class: "btn btn-primary" %>
+<% end %>

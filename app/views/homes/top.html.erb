@@ -10,6 +10,7 @@
         <!-- サイドバーのコンテンツ部分 -->
         <div class="col-md-6">
           <div class="content-area">
+            <%= render 'layouts/profile_section' %>
             <%= render 'layouts/spot_section' %>
             <%= render 'layouts/post_section' %>
             <%= render 'layouts/likes_section' %>
@@ -28,6 +29,7 @@
 
 <script>
   let map;
+  let previousMarker = null;  // ここで previousMarker を初期化
 
   function initMap(){
     geocoder = new google.maps.Geocoder()
@@ -56,13 +58,15 @@
         <% @maps.each do |m| %>
           <% m.post_maps.each do |post_map| %>
             <% post = post_map.post %>
-            (function(){
-              // ポストの詳細を表示するためのHTMLコンテンツを作成
+             (function(){
+         // ポストの詳細を表示するためのHTMLコンテンツを作成
               var contentString = `
                 <ul class="list-group">
                   <li class="list-group-item">
-                    <img src="<%= post.snap.url %>" alt="<%= post.body %>" style="width: 50px; height: 50px;">
-                    <div>
+                    <a href="/posts/<%= post.id %>">
+                      <img src="<%= post.snap.url %>" alt="<%= post.body %>" style="width: 50px; height: 50px;">
+                    </a>
+                   <div>
                       <strong><%= post.body %></strong>
                       <p>Likes: 10 | Comments: 5</p> <!-- ここはダミーデータなので後で修正が必要です -->
                     </div>
@@ -70,25 +74,26 @@
                 </ul>
               `;
 
-              // インフォウィンドウの作成
-              var infowindow = new google.maps.InfoWindow({
-                content: contentString,
-              });
+      // インフォウィンドウの作成
+      var infowindow = new google.maps.InfoWindow({
+        content: contentString,
+      });
 
-              // マーカーの作成と地図への追加
-              var marker = new google.maps.Marker({
-                position:{lat: <%= m.latitude %>, lng: <%= m.longitude %>},
-                map: map,
-                title: "<%= m.spot_name %>",
-              });
+      // マーカーの作成と地図への追加
+      var marker = new google.maps.Marker({
+        position:{lat: <%= m.latitude %>, lng: <%= m.longitude %>},
+        map: map,
+        title: "<%= m.spot_name %>",
+      });
 
-              // マーカークリック時のイベントハンドラを設定（インフォウィンドウを開く）
-              marker.addListener('click', function() {
-                infowindow.open(map, marker);
-              });
-            })();
-          <% end %>
+      // マーカークリック時のイベントハンドラを設定（インフォウィンドウを開く）
+      marker.addListener('click', function() {
+        infowindow.open(map, marker);
+      });
+    })();
         <% end %>
+        <% end %>
+
       });
     } else {
       // Geolocationがサポートされていない場合、デフォルトの位置に地図を表示
@@ -97,8 +102,32 @@
         zoom: 12,
       });
     }
+
+     // クリックイベントリスナーを追加
+  map.addListener('click', function(event) {
+    // クリックした位置の座標を取得
+    const clickPos = {
+      lat: event.latLng.lat(),
+      lng: event.latLng.lng(),
+    };
+
+    // 前のマーカーがあれば削除する
+    if (previousMarker) {
+      previousMarker.setMap(null);
+    }
+
+    // その位置に新しいマーカーを立てる
+    previousMarker = new google.maps.Marker({
+      position: clickPos,
+      map: map,
+    });
+
+    // マップのセンターをクリックした位置に設定
+    map.setCenter(clickPos);
+  });
   }
 </script>
+
 
 <script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['AIzaSyDUFgWwu57R50ATnJ6zmPeO3Xuphjn620w'] %>&callback=initMap" async defer></script>
 
@@ -113,3 +142,13 @@
     });
   });
 </script>
+
+<!--Listからセンター合わせ-->
+
+<script>
+  function centerMap(latitude, longitude) {
+  const center = new google.maps.LatLng(latitude, longitude);
+  map.setCenter(center);
+}
+</script>
+

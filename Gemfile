@@ -90,3 +90,12 @@ gem 'geocoder'
 
 # 認証トークンの生成
 gem 'jwt'
+
+
+gem 'ransack'
+
+gem "enum_help"
+
+gem 'cancan'
+
+gem 'paranoia'
