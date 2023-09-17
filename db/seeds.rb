@@ -12,3 +12,36 @@ User.first_or_create!(
   password: 'admin1',    # adminユーザーのパスワード
   admin: true                 # admin列をtrueに設定してadmin権限を付与
 )
+
+
+# テスト用のSeed
+
+User.create!(
+    name: '@test1',
+    email: 'test1@test1',
+    password: '111111',
+    admin:false
+  )
+
+
+User.create!(
+    name: '@test2',
+    email: 'test2@test2',
+    password: '111111',
+    admin:false
+  )
+
+User.create!(
+    name: '@test3',
+    email: 'test3@test3',
+    password: '111111',
+    admin:false
+  )
+
+User.create!(
+    name: '@test4',
+    email: 'test4@test4',
+    password: '111111',
+    admin:false
+  )
+
