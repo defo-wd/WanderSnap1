@@ -5,3 +5,10 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+User.first_or_create!(
+  name: 'admin1',
+  email: 'admin@admin', # adminユーザーのメールアドレス
+  password: 'admin1',    # adminユーザーのパスワード
+  admin: true                 # admin列をtrueに設定してadmin権限を付与
+)

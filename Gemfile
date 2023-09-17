@@ -93,3 +93,9 @@ gem 'jwt'
 
 
 gem 'ransack'
+
+gem "enum_help"
+
+gem 'cancan'
+
+gem 'paranoia'

@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
+  mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   root to: "homes#top"
+
 
   # 一般的な検索用のルート
   get "search" => "searches#search"
@@ -38,4 +40,6 @@ Rails.application.routes.draw do
   resources :follows, only: [:create, :destroy]
 
   resources :search_results, only: [:index]
+
+  resources :reports, only: [:new, :create]
 end

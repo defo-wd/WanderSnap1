@@ -1,4 +1,9 @@
 class User < ApplicationRecord
+  acts_as_paranoid
+  scope :deleted, -> { where.not(deleted_at: nil) }
+  scope :alive, -> { where(deleted_at: nil) }
+
+
   def self.ransackable_attributes(auth_object = nil)
   %w[name]
   end
@@ -19,6 +24,10 @@ class User < ApplicationRecord
   has_many :liked_posts, through: :likes, source: :post
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
+
+  # 通報機能
+  has_many :reports, class_name: "Report", foreign_key: "reporter_id", dependent: :destroy
+  has_many :reverse_of_reports, class_name: "Report", foreign_key: "reported_id", dependent: :destroy
 
   # レベル、エリア、ポイントのカスタム属性
   attr_accessor :level, :area

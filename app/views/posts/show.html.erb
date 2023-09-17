@@ -47,6 +47,8 @@
 </div>
 </div>
 
+<%= link_to '通報する', new_report_path(reporter_id: current_user.id, user_id: @post.user_id, post_id: @post.id) %>
+
   <div class="row mt-4">
     <div class="col-md-12">
       <% if user_signed_in? && current_user == @post.user %>

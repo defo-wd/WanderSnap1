@@ -53,7 +53,7 @@ class PostsController < ApplicationController
     @post.destroy
     redirect_to posts_url, notice: 'Post was successfully destroyed.'
   end
-  
+
   def search
   @q = Post.ransack(params[:q])
   @posts = @q.result(distinct: true)
