@@ -28,6 +28,8 @@ class User < ApplicationRecord
   # 通報機能
   has_many :reports, class_name: 'Report', foreign_key: 'reported_post_id'
   # レベル、エリア、ポイントのカスタム属性
+
+  # レベルだめかもしれない。間に合わない。
   attr_accessor :level, :area
 
   # バリデーションを追加
