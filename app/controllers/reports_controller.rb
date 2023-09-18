@@ -1,18 +1,18 @@
 class ReportsController < ApplicationController
 def new
   @report = Report.new
-  @user = User.find(params[:user_id])
-  @post = Post.find(params[:post_id])
+  @user = User.find(params[:reported_id])
+  @post = params[:post_id].present? ? Post.find(params[:post_id]) : nil
 end
 
 def create
   @user = User.find(params[:report][:reported_id])
-  @post = Post.find(params[:report][:reported_post_id])
+  @post = params[:report][:reported_post_id].present? ? Post.find(params[:report][:reported_post_id]) : nil
   @report = Report.new(report_params)
   if @report.save
     redirect_to root_path, notice: '通報が送信されました'
   else
-    render :new, alert: '通報の送信に失敗しました'
+    render :new
   end
 end
 
