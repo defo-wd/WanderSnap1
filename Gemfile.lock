@@ -101,6 +101,10 @@ GEM
       railties (>= 4.1.0)
       responders
       warden (~> 1.2.3)
+    dotenv (2.8.1)
+    dotenv-rails (2.8.1)
+      dotenv (= 2.8.1)
+      railties (>= 3.2)
     enum_help (0.0.19)
       activesupport (>= 3.0.0)
     erubi (1.12.0)
@@ -174,6 +178,7 @@ GEM
     minitest (5.19.0)
     msgpack (1.7.2)
     multi_json (1.15.0)
+    mysql2 (0.5.5)
     nested_form (0.3.2)
     net-imap (0.3.7)
       date
@@ -191,8 +196,7 @@ GEM
     paranoia (2.6.2)
       activerecord (>= 5.1, < 7.1)
     public_suffix (5.0.3)
-    puma (5.6.7)
-      nio4r (~> 2.0)
+    puma (3.12.6)
     racc (1.7.1)
     rack (2.2.8)
     rack-mini-profiler (2.3.4)
@@ -327,6 +331,7 @@ DEPENDENCIES
   capybara (>= 3.26)
   carrierwave
   devise
+  dotenv-rails
   enum_help
   exifr
   exiftool_vendored
@@ -336,8 +341,12 @@ DEPENDENCIES
   jwt
   kaminari
   listen (~> 3.3)
+  mysql2
+  net-imap
+  net-pop
+  net-smtp
   paranoia
-  puma (~> 5.0)
+  puma (~> 3.11)
   rack-mini-profiler (~> 2.0)
   rails (~> 6.1.7, >= 6.1.7.6)
   rails-i18n
