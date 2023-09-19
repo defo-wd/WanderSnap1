@@ -1,4 +1,41 @@
-<%= render 'users/profile', user: @user %>
+<div class="container mt-5">
+  <div class="row">
+    <!-- Sidebar -->
+    <div class="col-md-4 bg-light p-3 border-right">
+      <div class="text-center">
+        <% if @user.profile_image.present? %>
+          <%= image_tag @user.profile_image, class: "rounded-circle shadow mb-3", style: "width: 150px; height: 150px;" %>
+        <% else %>
+          <%= image_tag 'defaultuser.png', class: "rounded-circle shadow mb-3", style: "width: 150px; height: 150px;" %>
+        <% end %>
+        <h2 class="text-dark"><%= @user.name %></h2>
+        <p class="text-secondary">フォロー: <%= @user.following.count %> | フォロワー: <%= @user.followers.count %></p>
+        <% unless current_user == @user %>
+          <div id="follow_form" class="mb-2">
+            <% if current_user.following?(@user) %>
+              <%= render 'follows/unfollow' %>
+            <% else %>
+              <%= render 'follows/follow' %>
+            <% end %>
+          </div>
+          <div>
+            <%= link_to '通報する', new_report_path(reporter_id: current_user.id, reported_id: @user.id), class: "btn btn-outline-dark" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
 
-<%= link_to '通報する', new_report_path(reporter_id: current_user.id, reported_id: @user.id) %>
-
+    <!-- Main content area -->
+    <div class="col-md-8 bg-white p-3">
+      <div class="row">
+        <% @user.posts.each do |post| %>
+          <div class="col-md-4 mb-4">
+            <%= link_to post_path(post) do %>
+              <%= image_tag post.snap.url, class: "img-fluid rounded shadow", alt: post.body %>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
