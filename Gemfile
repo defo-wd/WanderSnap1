@@ -103,6 +103,7 @@ gem 'paranoia'
 
 gem 'dotenv-rails'
 group :production do
+  gem 'listen', '~> 3.3'
   gem 'mysql2'
 end
 
