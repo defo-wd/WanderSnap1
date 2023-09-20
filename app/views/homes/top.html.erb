@@ -58,7 +58,7 @@
           center: pos,
           zoom: 12,
         });
-
+        setup_map_click(map)
         // 現在の位置にマーカーを設定
         new google.maps.Marker({
           position: pos,
@@ -113,35 +113,40 @@
         center: {lat: 35.68123620000001, lng: 139.7671248},
         zoom: 12,
       });
+      setup_map_click(map)
     }
 
+  }
+  function setup_map_click(map){
      // クリックイベントリスナーを追加
-  map.addListener('click', function(event) {
+          map.addListener('click', function(event) {
     // クリックした位置の座標を取得
-    const clickPos = {
-      lat: event.latLng.lat(),
-      lng: event.latLng.lng(),
-    };
+          const clickPos = {
+            lat: event.latLng.lat(),
+            lng: event.latLng.lng(),
+          };
 
     // 前のマーカーがあれば削除する
-    if (previousMarker) {
-      previousMarker.setMap(null);
-    }
+          if (previousMarker) {
+            previousMarker.setMap(null);
+          }
 
     // その位置に新しいマーカーを立てる
-    previousMarker = new google.maps.Marker({
-      position: clickPos,
-      map: map,
-    });
+          previousMarker = new google.maps.Marker({
+          position: clickPos,
+          map: map,
+        });
 
     // マップのセンターをクリックした位置に設定
-    map.setCenter(clickPos);
-  });
+        map.setCenter(clickPos);
+      });
+
+
   }
 </script>
 
 
-<script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['AIzaSyDUFgWwu57R50ATnJ6zmPeO3Xuphjn620w'] %>&callback=initMap" async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_API_KEY'] %>&callback=initMap" async defer></script>
 
 <!--sサイドバー-->
 
