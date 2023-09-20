@@ -10,7 +10,7 @@ import "../stylesheets/application";
 
 
 Rails.start()
-Turbolinks.start()
+//Turbolinks.start()
 ActiveStorage.start()
 
 // 画像プレビュー系のJavaScript
