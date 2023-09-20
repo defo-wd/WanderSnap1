@@ -52,25 +52,53 @@
           lat: position.coords.latitude,
           lng: position.coords.longitude,
         };
+        setup_map(pos)
 
         // Google Mapの初期化
-        map = new google.maps.Map(document.getElementById('map'), {
+      },
+      (err)=>{
+        console.log(err)
+        switch(err.code){
+          case 1:
+            alert("現在位置を取得できませんでした");
+            break;
+        }
+
+        const pos = {
+          lat: 35.68123620000001,
+          lng: 139.7671248,
+        };
+        setup_map(pos)
+      });
+    }
+     else {
+      // Geolocationがサポートされていない場合、デフォルトの位置に地図を表示
+        const pos = {
+          lat: 35.68123620000001,
+          lng: 139.7671248,
+        };
+        setup_map(pos)
+    }
+  }
+
+  function setup_map(pos){
+    map = new google.maps.Map(document.getElementById('map'), {
           center: pos,
           zoom: 12,
-        });
-        setup_map_click(map)
+    });
+    setup_map_click(map)
         // 現在の位置にマーカーを設定
-        new google.maps.Marker({
+    new google.maps.Marker({
           position: pos,
           map: map,
           title: "現在位置",
-        });
+    });
 
         // MapとPostデータから各ポストの情報と位置を取得してマーカーを設定
-        <% @maps.each do |m| %>
-          <% m.post_maps.each do |post_map| %>
-            <% post = post_map.post %>
-             (function(){
+    <% @maps.each do |m| %>
+      <% m.post_maps.each do |post_map| %>
+        <% post = post_map.post %>
+          (function(){
          // ポストの詳細を表示するためのHTMLコンテンツを作成
               var contentString = `
                 <ul class="list-group">
@@ -86,37 +114,31 @@
                 </ul>
               `;
 
-      // インフォウィンドウの作成
-      var infowindow = new google.maps.InfoWindow({
-        content: contentString,
-      });
+          <% if m.latitude &&  m.longitude %>
+            // インフォウィンドウの作成
+            var infowindow = new google.maps.InfoWindow({
+              content: contentString,
+            });
 
-      // マーカーの作成と地図への追加
-      var marker = new google.maps.Marker({
-        position:{lat: <%= m.latitude %>, lng: <%= m.longitude %>},
-        map: map,
-        title: "<%= m.spot_name %>",
-      });
+            // マーカーの作成と地図への追加
+
+            var marker = new google.maps.Marker({
+              position:{lat: <%= m.latitude %>, lng: <%= m.longitude %>},
+              map: map,
+              title: "<%= m.spot_name %>",
+            });
 
       // マーカークリック時のイベントハンドラを設定（インフォウィンドウを開く）
-      marker.addListener('click', function() {
-        infowindow.open(map, marker);
-      });
-    })();
-        <% end %>
-        <% end %>
-
-      });
-    } else {
-      // Geolocationがサポートされていない場合、デフォルトの位置に地図を表示
-      map = new google.maps.Map(document.getElementById('map'), {
-        center: {lat: 35.68123620000001, lng: 139.7671248},
-        zoom: 12,
-      });
-      setup_map_click(map)
-    }
+            marker.addListener('click', function() {
+              infowindow.open(map, marker);
+            });
+          <% end %>
+          })();
+      <% end %>
+    <% end %>
 
   }
+
   function setup_map_click(map){
      // クリックイベントリスナーを追加
           map.addListener('click', function(event) {
@@ -139,6 +161,9 @@
 
     // マップのセンターをクリックした位置に設定
         map.setCenter(clickPos);
+      document.getElementById('latitude').value = event.latLng.lat();
+      document.getElementById('longitude').value = event.latLng.lng();
+
       });
 
 
