@@ -1,14 +1,13 @@
 <% if user_signed_in? %>
   <div class="btn-group" role="group">
     <% if @post.liked_by?(current_user) %>
-      <%= link_to post_likes_path(@post), method: :delete, remote: true, id: "like-button", class: "btn btn-outline-danger" do %>
+      <%= link_to post_likes_path(@post), method: :delete, remote: true, id: "unlike-button", class: "btn btn-link text-danger" do %>
         <i class="fas fa-heart"></i>
       <% end %>
     <% else %>
-      <%= link_to post_likes_path(@post), method: :post, remote: true, id: "like-button", class: "btn btn-outline-danger" do %>
+      <%= link_to post_likes_path(@post), method: :post, remote: true, id: "like-button", class: "btn btn-link text-danger" do %>
         <i class="far fa-heart"></i>
       <% end %>
     <% end %>
-    <span id="like-count" class="ml-2"><%= @post.likes.count %></span>
   </div>
 <% end %>

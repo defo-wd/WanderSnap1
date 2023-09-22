@@ -29,6 +29,7 @@
   <div class="row mt-4">
     <div class="col-md-12">
       <%= render partial: 'likes/like', locals: { post: @post } %>
+          <span id="like-count" class="ml-2"><%= @post.likes.count %></span>
     </div>
   </div>
 
