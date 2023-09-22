@@ -1,15 +1,21 @@
 <% @posts.each do |post| %>
   <li class="list-group-item">
-    <% post.maps.each do |map| %>
-      <%= link_to "javascript:void(0)", onclick: "centerMap(#{map.latitude}, #{map.longitude})" do %>
-        <img src="<%= post.snap.url %>" alt="<%= post.body %>" style="width: 50px; height: 50px;">
-      <% end %>
-      <div>
-        <strong>
-          <%= post.body %>
-         <p>Likes: 10 | Comments: 5</p>
-        </strong>
+    <div class="row">
+      <div class="col-md-4">
+        <%= link_to "javascript:void(0)", onclick: "centerMap(#{post.maps.first.latitude}, #{post.maps.first.longitude})" do %>
+          <%= image_tag post.snap.url, alt: post.body, class: "img-fluid" %>
+        <% end %>
       </div>
-    <% end %>
+      <div class="col-md-8">
+        <strong>
+          <%= link_to post.body, post_path(post) %>
+        </strong>
+        <p>
+          <span class="font-weight-bold">Spot:</span> <%= post.maps.first&.spot_name || 'N/A' %><br>
+          <span class="font-weight-bold">Posted by:</span> <%= link_to post.user.name, user_path(post.user) %><br>
+          <span class="font-weight-bold">Likes:</span> <%= post.likes.count %> | <span class="font-weight-bold">Comments:</span> <%= post.comments.count %>
+        </p>
+      </div>
+    </div>
   </li>
 <% end %>

@@ -7,6 +7,7 @@ class PostsController < ApplicationController
 
   def show
     @post = Post.find(params[:id])
+    @user = @post.user
     @comments = @post.comments.where(parent_id: nil).includes(:replies) # 主コメントとそのリプライを取得
     @comment = @post.comments.new
   end

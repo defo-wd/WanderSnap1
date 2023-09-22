@@ -12,23 +12,23 @@
       <ul class="navbar-nav ml-auto">
         <% if user_signed_in? %>
           <li class="nav-item">
-            <%= link_to destroy_user_session_path, method: :delete, class: 'nav-link' do %>
+            <%= link_to destroy_user_session_path, method: :delete, class: 'nav-link no-js' do %>
               <i class="fas fa-sign-out-alt"></i>
             <% end %>
           </li>
         <% else %>
           <li class="nav-item">
-            <%= link_to users_guest_sign_in_path, method: :post, class: 'nav-link' do %>
+            <%= link_to users_guest_sign_in_path, method: :post, class: 'nav-link no-js' do %>
               <i class="fas fa-user-secret"></i>
             <% end %>
           </li>
           <li class="nav-item">
-            <%= link_to new_user_registration_path, class: 'nav-link' do %>
+            <%= link_to new_user_registration_path, class: 'nav-link no-js' do %>
               <i class="fas fa-user-plus"></i>
             <% end %>
           </li>
           <li class="nav-item">
-            <%= link_to new_user_session_path, class: 'nav-link' do %>
+            <%= link_to new_user_session_path, class: 'nav-link no-js' do %>
               <i class="fas fa-sign-in-alt"></i>
             <% end %>
           </li>

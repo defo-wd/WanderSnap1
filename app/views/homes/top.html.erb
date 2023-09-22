@@ -177,14 +177,18 @@
 
 <script>
   document.querySelectorAll('.nav-link').forEach((link) => {
-    link.addEventListener('click', (e) => {
+  link.addEventListener('click', (e) => {
+    const dataContent = e.target.getAttribute('data-content');
+    if (dataContent) {  // data-content属性が存在する場合のみ処理を行う
       e.preventDefault();
       document.querySelectorAll('.content-section').forEach((section) => {
         section.classList.add('d-none');
       });
-      document.querySelector(`#${e.target.getAttribute('data-content')}`).classList.remove('d-none');
-    });
+      document.querySelector(`#${dataContent}`).classList.remove('d-none');
+    }
   });
+});
+
 </script>
 
 <!--Listからセンター合わせ-->

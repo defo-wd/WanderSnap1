@@ -4,8 +4,22 @@
     <ul class="list-group">
       <% current_user.liked_posts.each do |post| %>
         <li class="list-group-item">
-          <%= link_to post.body, post_path(post) %>
-          <p><%= post.body.truncate(100) %></p>
+          <div class="row">
+            <div class="col-md-4">
+              <%= link_to "javascript:void(0)", onclick: "centerMap(#{post.maps.first.latitude}, #{post.maps.first.longitude})" do %>
+                <img src="<%= post.snap.url %>" alt="<%= post.body %>" class="img-fluid">
+              <% end %>
+            </div>
+            <div class="col-md-8">
+              <strong>
+                <%= link_to post.body, post_path(post) %>
+              </strong>
+              <p>
+                Posted by: <%= link_to post.user.name, user_path(post.user) %><br>
+                Likes: <%= post.likes.count %> | Comments: <%= post.comments.count %>
+              </p>
+            </div>
+          </div>
         </li>
       <% end %>
     </ul>

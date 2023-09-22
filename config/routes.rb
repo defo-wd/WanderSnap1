@@ -14,6 +14,9 @@ Rails.application.routes.draw do
   end
 
   resources :users do
+    member do
+      get :following, :followers
+    end
     collection do
       get 'search', as: :search
     end

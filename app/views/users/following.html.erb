@@ -1,9 +1,9 @@
-<div class="content-section d-none" id="follow">
+<div class="content-section" id="follow">
   <h2>Following Users</h2>
   <% if user_signed_in? %>
     <ul class="list-group">
-      <% if current_user.following.any? %>
-        <% current_user.following.each do |user| %>
+      <% if @following.any? %>
+        <% @following.each do |user| %>
           <li class="list-group-item d-flex align-items-center">
             <% if user.profile_image.present? %>
               <%= image_tag user.profile_image.url, size: "50x50", class: "rounded-circle me-3" %>

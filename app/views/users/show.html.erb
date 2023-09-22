@@ -1,7 +1,7 @@
 <div class="container mt-5">
   <div class="row">
     <!-- Sidebar -->
-    <div class="col-md-4 bg-light p-3 border-right">
+    <div class="col-md-3 bg-light p-3 border-right">
       <div class="text-center">
         <% if @user.profile_image.present? %>
           <%= image_tag @user.profile_image, class: "rounded-circle shadow mb-3", style: "width: 150px; height: 150px;" %>
@@ -9,7 +9,10 @@
           <%= image_tag 'defaultuser.png', class: "rounded-circle shadow mb-3", style: "width: 150px; height: 150px;" %>
         <% end %>
         <h2 class="text-dark"><%= @user.name %></h2>
-        <p class="text-secondary">フォロー: <%= @user.following.count %> | フォロワー: <%= @user.followers.count %></p>
+        <p class="text-secondary">
+          フォロー: <%= link_to @user.following.count, following_user_path(@user) %> |
+          フォロワー: <%= link_to @user.followers.count, followers_user_path(@user) %>
+        </p>
         <% unless current_user == @user %>
           <div id="follow_form" class="mb-2">
             <% if current_user.following?(@user) %>
@@ -26,13 +29,24 @@
     </div>
 
     <!-- Main content area -->
-    <div class="col-md-8 bg-white p-3">
+    <div class="col-md-9 bg-white p-3">
       <div class="row">
         <% @user.posts.each do |post| %>
-          <div class="col-md-4 mb-4">
-            <%= link_to post_path(post) do %>
-              <%= image_tag post.snap.url, class: "img-fluid rounded shadow", alt: post.body %>
-            <% end %>
+          <div class="col-md-3 mb-4">
+            <div class="card" style="height: 100%;">
+              <%= link_to post_path(post) do %>
+                <%= image_tag post.snap.url, class: "card-img-top img-fluid rounded shadow", alt: post.body %>
+              <% end %>
+              <div class="card-body">
+                <div class="text-center">
+                  <small>
+                    Likes: <%= post.likes.count %> |
+                    Comments: <%= post.comments.count %> |
+                    Spot: <%= post.maps.first&.spot_name || 'N/A' %>
+                  </small>
+                </div>
+              </div>
+            </div>
           </div>
         <% end %>
       </div>
