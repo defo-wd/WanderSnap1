@@ -13,12 +13,6 @@
           <%= f.text_field :name, autofocus: true, autocomplete: "username", class: 'form-control' %>
         </div>
 
-        <!-- Profile Image Upload -->
-        <div class="form-group">
-          <%= f.label :profile_image, class: 'text-muted' %>
-          <%= f.file_field :profile_image, class: 'form-control-file' %>
-        </div>
-
         <!-- Email -->
         <div class="form-group">
           <%= f.label :email, class: 'text-muted' %>
@@ -30,7 +24,7 @@
           <%= f.label :password, class: 'text-muted' %>
           <% if @minimum_password_length %>
             <em>(<%= @minimum_password_length %> characters minimum)</em>
-          <% end %>
+          <% end %><br />
           <%= f.password_field :password, autocomplete: "new-password", class: 'form-control' %>
         </div>
 
