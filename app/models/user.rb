@@ -3,6 +3,10 @@ class User < ApplicationRecord
   scope :deleted, -> { where.not(deleted_at: nil) }
   scope :alive, -> { where(deleted_at: nil) }
 
+  def soft_delete
+    update(deleted_at: Time.current)
+  end
+
 
   def self.ransackable_attributes(auth_object = nil)
   %w[name]
@@ -11,8 +15,8 @@ class User < ApplicationRecord
 
   # アソシエーションもろもろ
 
-  has_many :posts
-  has_many :comments
+   has_many :posts, dependent: :destroy
+  has_many :comments, dependent: :destroy
 
   has_many :active_follows, class_name: "Follow", foreign_key: "follower_id", dependent: :destroy
   has_many :passive_follows, class_name: "Follow", foreign_key: "followee_id", dependent: :destroy
@@ -22,11 +26,13 @@ class User < ApplicationRecord
 
   has_many :likes, dependent: :destroy
   has_many :liked_posts, through: :likes, source: :post
+
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
   # 通報機能
-  has_many :reports, class_name: 'Report', foreign_key: 'reported_post_id'
+  has_many :reports, class_name: 'Report', foreign_key: 'reported_post_id', dependent: :destroy
   # レベル、エリア、ポイントのカスタム属性
 
   # レベルだめかもしれない。間に合わない。
@@ -41,12 +47,17 @@ class User < ApplicationRecord
   has_one_attached :profile_image
 
   #ゲストユーザー
-  def self.guest
-    find_or_create_by!(email: 'guest@example.com') do |user|
-      user.name = "@guest"
-      user.password = SecureRandom.urlsafe_base64
-    end
+ def self.guest
+  timestamp = Time.now.to_i
+
+  find_or_create_by!(email: "guest_#{timestamp}@example.com") do |user|
+    user.name = "@guest_#{timestamp}"
+    user.password = SecureRandom.urlsafe_base64
   end
+end
+
+
+
   def increase_points(amount)
     update(points: points + amount)
   end

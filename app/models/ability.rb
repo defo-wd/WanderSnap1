@@ -1,12 +1,10 @@
-# frozen_string_literal: true
-
 class Ability
   include CanCan::Ability
 
   def initialize(user)
-    if user && user.admin?
-      can :access, :rails_admin   # grant access to rails_admin
-      can :manage, :all           # allow superadmins to do anything
+    if user.try(:admin?)
+      can :access, :rails_admin
+      can :manage, :all
     end
   end
 end

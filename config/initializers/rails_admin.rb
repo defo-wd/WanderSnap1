@@ -23,6 +23,30 @@ RailsAdmin.config do |config|
     delete
     show_in_app
 
+       member :soft_delete do
+      only ['User', 'Post']
+
+      link_icon 'icon-trash'  # アイコンを設定
+
+      register_instance_option(:pjax?) { false }
+
+      register_instance_option(:visible?) do
+        bindings[:object].try(:deleted_at?).nil?
+      end
+
+      register_instance_option(:controller) do
+        Proc.new do
+          if @object.respond_to?(:soft_delete)
+            @object.soft_delete
+            flash[:success] = "Object soft deleted"
+          else
+            flash[:error] = "Object could not be soft deleted"
+          end
+          redirect_to back_or_index
+        end
+      end
+    end
+
     member :restore do
       only ['User', 'Post']
 
@@ -52,6 +76,7 @@ RailsAdmin.config do |config|
       field :created_at
       field :updated_at
       field :deleted_at
+
     end
   end
 

@@ -37,22 +37,31 @@ class PostsController < ApplicationController
   end
 
   def edit
-    @post = current_user.posts.find(params[:id])
+    @post = Post.find(params[:id])
+    @post_map = PostMap.find_by(post_id: @post.id)
+    @map = Map.find(@post_map.map_id) if @post_map
   end
+
 
   def update
     @post = current_user.posts.find(params[:id])
-    if @post.update(post_params)
-      redirect_to @post, notice: 'Post was successfully updated.'
-    else
-      render :edit
+  if @post.update(post_params)
+    @post_map = PostMap.find_by(post_id: @post.id)
+    @map = Map.find(@post_map.map_id) if @post_map
+    if @map
+      @map.update(spot_name: params[:map][:spot_name])
     end
+    redirect_to @post, notice: 'Post was successfully updated.'
+  else
+    render :edit
   end
+end
+
 
   def destroy
     @post = current_user.posts.find(params[:id])
     @post.destroy
-    redirect_to posts_url, notice: 'Post was successfully destroyed.'
+    redirect_to root_path, notice: 'Post was successfully destroyed.'
   end
 
   def search

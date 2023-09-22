@@ -1,0 +1,39 @@
+<!-- app/views/posts/edit.html.erb -->
+
+<h1>Edit Post</h1>
+
+<%= form_with(model: @post, local: true) do |form| %>
+  <% if @post.errors.any? %>
+    <div id="error_explanation" class="alert alert-danger">
+      <h2><%= pluralize(@post.errors.count, "error") %> prohibited this post from being saved:</h2>
+      <ul>
+        <% @post.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <!-- 投稿の画像を表示 -->
+  <<% if @post.snap.file.present? %>
+  <%= image_tag @post.snap.url, class: 'img-thumbnail', width: '200' %>
+<% end %>
+
+  <div class="form-group">
+    <%= form.label :spot_name, class: 'form-label text-dark' %>
+    <%= text_field_tag 'map[spot_name]', nil, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :body, "Body", class: 'form-label text-dark' %>
+    <%= form.text_area :body, class: 'form-control', required: true, value: @post.body %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit 'Update', class: 'btn btn-dark' %>
+  </div>
+
+  <!-- 削除ボタン -->
+  <%= link_to 'Delete', post_path(@post), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+
+<% end %>
