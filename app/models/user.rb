@@ -36,12 +36,12 @@ class User < ApplicationRecord
   # レベル、エリア、ポイントのカスタム属性
 
   # レベルだめかもしれない。間に合わない。
-  attr_accessor :level, :area
+  # attr_accessor :level, :area
 
   # バリデーションを追加
-  validates :level, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
-  validates :area, presence: false
-  validates :points, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+  # validates :level, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+  # validates :area, presence: false
+  # validates :points, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   validates :name, presence: true, uniqueness: true, length: { maximum: 50 }
 
   has_one_attached :profile_image
@@ -67,18 +67,18 @@ end
   end
 
   # カスタム属性へのアクセス方法を定義
-  def level
-    self[:level] || 0 # レベルが nil の場合はデフォルト値 0 を返す
-  end
+  # def level
+    # self[:level] || 0 # レベルが nil の場合はデフォルト値 0 を返す
+  # end
 
-  def area
-    self[:area] || "" # エリアが nil の場合は空文字列を返す
-  end
+  # def area
+    # self[:area] || "" # エリアが nil の場合は空文字列を返す
+  # end
 
   # ユーザーのレベル、エリア、ポイントを設定
-  def set_user_attributes(level, area, points)
-    update(level: level, area: area, points: points)
-  end
+  # def set_user_attributes(level, area, points)
+    # update(level: level, area: area, points: points)
+  # end
 
   def favorited_by?(user)
     favorites.exists?(user_id: user.id)

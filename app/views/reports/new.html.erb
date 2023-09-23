@@ -1,11 +1,28 @@
-<%= form_with(model: @report, local: true) do |form| %>
-  <%= form.label :reason, "通報理由" %>
-  <%= form.text_area :reason %>
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body">
+          <%= form_with(model: @report, local: true) do |form| %>
+            <h5 class="card-title text-center">通報フォーム</h5>
 
-<%= form.hidden_field :reporter_id, value: current_user.id %>
-<%= form.hidden_field :reported_id, value: @user&.id %>
-<%= form.hidden_field :reported_post_id, value: @post&.id %>
+            <div class="form-group">
+              <%= form.label :reason, "通報理由" %>
+              <%= form.text_area :reason, class: "form-control", placeholder: "通報理由を入力してください" %>
+            </div>
 
+            <div class="form-group">
+              <%= form.hidden_field :reporter_id, value: current_user.id %>
+              <%= form.hidden_field :reported_id, value: @user&.id %>
+              <%= form.hidden_field :reported_post_id, value: @post&.id %>
+            </div>
 
-  <%= form.submit "通報する" %>
-<% end %>
+            <div class="text-center">
+              <%= form.submit "通報する", class: "btn btn-primary" %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
