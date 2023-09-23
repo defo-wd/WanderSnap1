@@ -26,7 +26,11 @@
           <li class="list-group-item">
             <div class="row align-items-center">
               <div class="col-md-2">
-                <%= image_tag(user.profile_image, class: 'user-profile-image rounded-circle') if user.profile_image.present? %>
+                <% if user.profile_image.present? %>
+                  <%= image_tag(user.profile_image, class: 'user-profile-image rounded-circle') %>
+                <% else %>
+                  <%= image_tag('defaultuser.png', class: 'user-profile-image rounded-circle', alt: 'Default Image') %>
+                <% end %>
               </div>
               <div class="col-md-8">
                 <%= link_to user.name, user_path(user), class: "text-decoration-none" %><br>
@@ -50,7 +54,7 @@
               <div class="col-md-4">
                 <%= link_to image_tag(post.snap.url, class: "post-image"), post_path(post) %>
               </div>
-              <div class="col-md-8">
+              <div class="col-md-8"> <!-- テキストを右寄せ -->
                 <p>
                   <span class="font-weight-bold">Spot:</span> <%= post.maps.first&.spot_name || 'N/A' %><br>
                   <span class="font-weight-bold">Body:</span> <%= post.body %><br>
