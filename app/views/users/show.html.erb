@@ -13,7 +13,7 @@
           フォロー: <%= link_to @user.following.count, following_user_path(@user) %> |
           フォロワー: <%= link_to @user.followers.count, followers_user_path(@user) %>
         </p>
-        <% unless current_user == @user %>
+        <% unless current_user.nil? || current_user == @user %>
           <div id="follow_form" class="mb-2">
             <% if current_user.following?(@user) %>
               <%= render 'follows/unfollow' %>

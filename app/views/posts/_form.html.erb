@@ -1,3 +1,5 @@
+<% if user_signed_in? %>
+
 <%= form_with(model: post, local: true) do |form| %>
   <% if post.errors.any? %>
     <div id="error_explanation" class="alert alert-dark">
@@ -24,21 +26,28 @@
   <input type="text" name="map[latitude]" id="latitude" readonly>
   <input type="text" name="map[longitude]" id="longitude" readonly>
 
-<div class="form-group">
-  <%= form.label :title, "Title", class: 'form-label text-dark' %>
-  <%= form.text_area :body, class: 'form-control', required: true %>
-</div>
+  <div class="form-group">
+    <%= form.label :title, "Title", class: 'form-label text-dark' %>
+    <%= form.text_area :body, class: 'form-control', required: true %>
+  </div>
 
-<div class="form-group">
-  <%= form.label :snap, "Image", class: 'form-label text-dark' %>
-  <%= form.file_field :snap, class: 'form-control' %>
-</div>
+  <div class="form-group">
+    <%= form.label :snap, "Image", class: 'form-label text-dark' %>
+    <%= form.file_field :snap, class: 'form-control' %>
+  </div>
 
-<div class="actions">
-  <%= form.submit 'Submit', class: 'btn btn-dark' %>
-</div>
-
+  <div class="actions">
+    <%= form.submit 'Submit', class: 'btn btn-dark' %>
+  </div>
 <% end %>
+  <% else %>
+  <div class="bg-light p-3 border rounded text-center">
+    <p class="mb-3">ログインしていません</p>
+    <%= link_to 'ログイン', new_user_session_path, class: "btn btn-outline-dark btn-sm" %>
+    <%= link_to '新規登録', new_user_registration_path, class: "btn btn-outline-dark btn-sm ml-2" %>
+  </div>
+<% end %>
+
 
 
 <script>
